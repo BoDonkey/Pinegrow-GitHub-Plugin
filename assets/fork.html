@@ -1,0 +1,54 @@
+<div class="modal pg-show-modal fade" id="gh-fork-modal" tabindex="-1" role="dialog" aria-labelledby="ForkModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="gh-fork-close" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h5 class="modal-title" id="ForkModalLabel">Fork existing Repo</h5>
+                <p>This will fork an existing repo on GitHub and create a local copy.</p>
+            </div>
+            <div class="modal-body">
+                <span class="gh-error" id="gh-fork-log-error">Please log in using the settings menu.</span>
+                <form>
+                    <div class="form-group">
+                        <label for="gh-fork-repo-owner" class="form-control-label">Existing Repository
+                            Owner:</label>
+                        <input type="text" class="form-control" id="gh-fork-repo-owner" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gh-fork-repo-name" class="form-control-label">Existing Repository Name:</label>
+                        <input type="text" class="form-control" id="gh-fork-repo-name" required>
+                    </div>
+                    <div class="form-group">
+                        <h4>In order to create a branch and new local copy of an existing repo you need to select a
+                            directory path <strong>and</strong> a folder name.</h4>
+                        <p>The folder will be created or overwritten, in the selected directory and the repo contents
+                            saved inside.</p>
+                        <button type="button" id="gh-fork-get-save-folder" class="btn btn-primary">Select save
+                            location</button>
+                        <span id="gh-fork-save-location"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="gh-fork-folder-name" class="form-control-label">New Folder Name:</label>
+                        <input type="text" class="form-control" id="gh-fork-folder-name" required>
+                    </div>
+                    <div class="form-group" id="gh-fork-verification">
+                        <button type="button" id="gh-fork-folder-okay" class="btn btn-warning">Overwrite
+                            folder?</button>
+                        <button type="button" id="gh-fork-folder-cancel" class="btn btn-secondary">Cancel</button>
+                    </div>
+                    <input type="reset" id="gh-fork-reset-button"></input>
+                </form>
+                <h3>Messages</h3>
+                <div class="message-area">
+                    <div id="gh-fork-message-box" class="message-box" ></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="gh-fork-button" class="btn btn-primary">Fork</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

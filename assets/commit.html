@@ -1,0 +1,58 @@
+<div class="modal pg-show-modal fade" id="gh-commit-modal" tabindex="-1" role="dialog"
+    aria-labelledby="commitModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="gh-commit-x" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4>Staging Area</h4>
+                <h5 class="modal-title" id="commitModalLabel">Stage, Commit & Push Changes</h5>
+            </div>
+            <div class="modal-body">
+                <h5>Select files to be staged or unstaged. <span class="gh-blue">*</span> indicate files that have been
+                    staged already. <span class="gh-red">*</span> indicated files that have not been staged. Files that
+                    are greyed out have previously been commited to the repo and are unchanged.</h5>
+                <div id="ghDirectoryContainer"></div>
+                <h3 class="gh-ml">Git Status</h3>
+                <div class="gh-message-area">
+                    <div id="gh-commit-git-status-box" class="gh-message-box"></div>
+                </div>
+                <div>Use the "Get status" button to check currently staged files.</div>
+                <div class="gh-staging-buttons gh-ml gh-mt">
+                    <button type="button" id="gh-status-button" class="btn btn-primary">Get status</button>
+                    <button type="button" id="gh-unstage-button" class="btn btn-primary">Unstage files</button>
+                    <button type="button" id="gh-stage-button" class="btn btn-primary">Stage files</button>
+                </div>
+                <section id="gh-commit-area">
+                    <h3 class="gh-ml">Messages</h3>
+                    <div class="gh-message-area">
+                        <div id="gh-commit-message-box" class="gh-message-box"></div>
+                    </div>
+                    <div class="gh-ml gh-mt form-group">
+                        <label for="gh-commit-email">Commit author email address*</label>
+                        <input type="email" id="gh-commit-email" disabled>
+                    </div>
+                    <div class="gh-ml gh-mt form-group">
+                        <label for="gh-commit-message" disabled>Commit message (max 50 char)*</label>
+                        <textarea id="gh-commit-message" maxlength="50" rows="1" cols="50" disabled></textarea>
+                    </div>
+                    <div class="gh-ml gh-mt">
+                        <p class="gh-hidden gh-commit-error" id="gh-commit-email-error">You must enter an email address
+                        </p>
+                        <p class="gh-hidden gh-commit-error" id="gh-commit-message-error">You must add a commit message
+                        </p>
+                        <p class="gh-hidden gh-commit-error" id="gh-commit-credentials-error">Your credentials are not
+                            valid</p>
+                    </div>
+                    <button type="button" id="gh-commit-button" class="btn btn-primary gh-ml gh-mt" disabled>Commit
+                        files</button>
+            </div>
+            </section>
+            <div class="modal-footer">
+                <button type="button" id="gh-push-button" class="btn btn-primary" disabled>Push commits</button>
+                <button type="button" id="gh-commit-cancel" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

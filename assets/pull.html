@@ -1,0 +1,23 @@
+<div class="modal pg-show-modal fade" id="gh-pull-modal" tabindex="-1" role="dialog" aria-labelledby="pullModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="gh-pull-x" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h5 class="modal-title" id="pullModalLabel">Pull Changes</h5>
+            </div>
+            <div class="modal-body">
+                <h4>This is a simple pull request and will only pull in changes from the currently checked out branch.</h4>
+                <h4 class="gh-ml">Messages</h4>
+                <div class="gh-message-area">
+                    <div id="gh-pull-message-box" class="gh-message-box"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="gh-pull-button" class="btn btn-primary">Pull Repo</button>
+                <button type="button" id="gh-pull-cancel" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

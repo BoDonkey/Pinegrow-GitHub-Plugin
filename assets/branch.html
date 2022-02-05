@@ -1,0 +1,70 @@
+<div class="modal pg-show-modal fade" id="gh-branch-modal" tabindex="-1" role="dialog"
+    aria-labelledby="BranchModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="gh-branch-close" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h5 class="modal-title" id="BranchModalLabel">Branch existing Repo</h5>
+                <p>This will create a branch of a repo already on GitHub and save a local copy. If you have a local project that you want to branch you must first create a new repo and then branch it.</p>
+            </div>
+            <div class="modal-body">
+
+                <form class="requires-validation">
+                    <div class="form-group">
+                        <label for="gh-branch-repo-owner" class="form-control-label">Existing Repository
+                            Owner:</label>
+                        <input type="text" class="form-control" id="gh-branch-repo-owner" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gh-branch-repo-name" class="form-control-label">Existing Repository Name:</label>
+                        <input type="text" class="form-control" id="gh-branch-repo-name" required>
+                    </div>
+                    <div class="form-group">
+                        <h4>You can optionally create a branch from an existing branch of a repo by entering the name.
+                            Leaving this blank will create a branch off of the Main branch.</h4>
+                        <label for="gh-branch-branch-name" class="form-control-label">Branch name:</label>
+                        <input type="text" class="form-control" id="gh-branch-branch-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="gh-branch-new-name" class="form-control-label">New Branch Name (allowed characters include 'A-Z', 'a-z', '0-9','-', '_', and '.'):</label>
+                        <input type="text" class="form-control" id="gh-branch-new-name" pattern="[A-Za-z0-9._-]" required>
+                    </div>
+                    <div class="form-group">
+                        <h4>In order to create a branch and new local copy of an existing repo you need to select a
+                            directory path <strong>and</strong> a folder name.</h4>
+                        <p>The folder will be created or overwritten, in the selected directory and the repo contents
+                            saved inside.</p>
+                        <button type="button" id="gh-branch-get-save-folder" class="btn btn-primary">Select save
+                            location</button>
+                        <span id="gh-branch-save-location"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="gh-branch-folder-name" class="form-control-label">New Folder Name:</label>
+                        <input type="text" class="form-control" id="gh-branch-folder-name" required>
+                    </div>
+                    <div class="form-group" id="gh-branch-verification">
+                        <button type="button" id="gh-branch-folder-okay" class="btn btn-warning">Overwrite
+                            folder?</button>
+                        <button type="button" id="gh-branch-folder-cancel" class="btn btn-secondary">Cancel</button>
+                    </div>
+                    <input type="reset" id="gh-branch-reset-button"></input>
+                </form>
+                <div>
+                    <span class="gh-logged-in" id="gh-branch-correct-credentials">You are currently logged in</span>
+                    <span class="gh-error" id="gh-branch-incorrect-credentials">Your current credentials are not
+                        correct. Please check the GitHub Settings menu.</span>
+                </div>
+                <h3>Messages</h3>
+                <div class="gh-message-area">
+                    <div id="gh-branch-message-box" class="gh-message-box"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="gh-branch-submit" class="btn btn-primary">Branch</button>
+                <button type="button" id="" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

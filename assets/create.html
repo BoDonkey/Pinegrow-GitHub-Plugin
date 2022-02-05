@@ -1,0 +1,108 @@
+<div class="modal pg-show-modal fade" id="gh-create-modal" tabindex="-1" role="dialog"
+    aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="create-close-button" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h5 class="modal-title" id="createModalLabel">Create a new modal</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="gh-new-repo-name" class="form-control-label">New Repository Name (allowed characters include 'A-Z', 'a-z', '0-9','-', '_', and '.'):</label>
+                        <input type="text" class="form-control" id="gh-new-repo-name" required>
+                        <input type="checkbox" id="gh-use-existing-folder" name="ghUseExistingFolder"
+                            class="form-check-input" pattern="[A-Za-z0-9-_.]">
+                        <label for="gh-use-existing-folder" class="form-control-label">Check to create GitHub repo from
+                            the current project (give same name and add all files except those specified in `.gitignore`
+                            file). </label>
+                        <span class="gh-error" id="gh-repo-name-error">A repo name is required.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="gh-repo-license" class="form-control-label">Select license</label>
+                        <select class="form-select" aria-label="licence select" id="gh-repo-license">
+                            <option value="" selected></option>
+                            <option value="AFL-3.0">afl-3.0</option>
+                            <option value="APACHE-2.0">apache-2.0</option>
+                            <option value="ARTISTIC-2.0">artistic-2.0</option>
+                            <option value="BSL-1.0">bsl-1.0</option>
+                            <option value="BSD-2-CLAUSE">bsd-2-clause</option>
+                            <option value="BSD-3-CLAUSE">bsd-3-clause</option>
+                            <option value="BSD-3-CLAUSE-CLEAR">bsd-3-clause-clear</option>
+                            <option value="CC">cc</option>
+                            <option value="CC0-1.0">cc0-1.0</option>
+                            <option value="CC-BY-4.0">cc-by-4.0</option>
+                            <option value="CC-BY-SA-4.0">cc-by-sa-4.0</option>
+                            <option value="WTFPL">wtfpl</option>
+                            <option value="ECL-2.0">ecl-2.0</option>
+                            <option value="EPL-1.0">ecl-1.0</option>
+                            <option value="EPL-2.0">epl-2.0</option>
+                            <option value="EUPL-1.1">eupl-1.1</option>
+                            <option value="AGPL-3.0">agpl-3.0</option>
+                            <option value="GPL-2.0">gpl-2.0</option>
+                            <option value="GPL-3.0">gpl-3.0</option>
+                            <option value="LGPL-2.1">lgpl-2.1</option>
+                            <option value="LGPL-3.0">lgpl-3.0</option>
+                            <option value="LPPL-1.3C">lppl-1.3c</option>
+                            <option value="MS-PL">ms-pl</option>
+                            <option value="MIT">mit</option>
+                            <option value="MPL-2.0">mpl-2.0</option>
+                            <option value="OSL-3.0">osl-3.0</option>
+                            <option value="POSTGRESQL">postgresql</option>
+                            <option value="NCSA">ncsa</option>
+                            <option value="UNLICENSE">unlicense</option>
+                            <option value="ZLIB">zlib</option>
+                        </select>
+                        <span class="gh-error" id="gh-license-error">A license must be selected</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="gh-repo-description" class="form-control-label">Repo description</label>
+                        <input type="text-area" class="form-control" id="gh-repo-description">
+                    </div>
+                    <div class="form-check gh-hidden" id="gh-create-commit-message-group" >
+                        <label class="form-control-label" for="gh-create-commit-message">Initial commit message?</label>
+                        <input class="form-control" type="text-area" id="gh-create-commit-message" name="message"
+                            placeholder="commit initial files">
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gh-repo-private" name="private">
+                        <label class="form-check-label" for="gh-repo-private">Make private?</label>
+                    </div>
+                    <div class="form-check" id="gh-auto-initialize-group">
+                        <input class="form-check-input" type="checkbox" id="gh-auto-init" name="auto-init">
+                        <label class="form-check-label" for="gh-auto-init">Auto initialize?</label>
+                    </div>
+                    <div class="form-group" id="gh-create-new-folder-group">
+                        <h4>Creating a new repo at GitHub will also create a local copy of the repo.</h4>
+                        <h4>You need to select a local directory path <strong>and</strong> a new folder name.</h4>
+                        <button type="button" id="gh-get-new-save-folder" class="btn btn-primary">Select save
+                            location</button>
+                        <span id="gh-new-save-location"></span>
+                        <span class="gh-error" id="gh-create-path-error">A save path is required</span>
+                    </div>
+                    <div class="form-group" id="gh-new-folder-name-group">
+                        <label for="gh-new-folder-name" class="form-control-label">New Folder Name (this does not have to match the repo name and can contain spaces):</label>
+                        <input type="text" class="form-control" id="gh-new-folder-name" required>
+                        <span class="gh-error" id="gh-create-folder-name-error">Please add a folder name</span>
+                    </div>
+                    <input id="gh-create-reset" type="reset" value="reset">
+                </form>
+                <div>
+                    <span class="gh-logged-in" id="gh-create-correct-credentials">You are currently logged in</span>
+                    <span class="gh-error" id="gh-create-incorrect-credentials">Your current credentials are not
+                        correct. Please check the GitHub Settings menu.</span>
+                </div>
+                <h3>Messages</h3>
+                <div class="gh-message-area">
+                    <div id="gh-create-message-box" class="gh-message-box"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="gh-create-repo-button" class="btn btn-primary">Create Repo</button>
+                <button type="button" id="gh-create-close-button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+/*From create.html*/
+.gh-error {
+    color: red;
+    display: none;
+}
+
+.gh-logged-in {
+    color: green;
+    display: none;
+}
+
+.gh-message-area {
+    width: 100%;
+    height: 6em;
+    display: flex;
+    justify-content: center;
+}
+
+.gh-message-box {
+    width: 100%;
+    height: 6em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    overflow-y: scroll;
+}
+
+/* From clone.html */
+#gh-clone-verification {
+    visibility: hidden;
+    margin-left: 20px;
+}
+
+#gh-clone-verification.visible {
+    visibility: visible;
+}
+
+/* From branch.html */
+#gh-branch-verification {
+    display: none;
+    margin-left: 20px;
+}
+
+#gh-branch-verification.visible {
+    visibility: visible;
+}
+
+/* From commit.html */
+#ghProjectTree {
+    list-style: none;
+    padding: 0;
+}
+
+#ghProjectTree input {
+    margin-right: 10px;
+}
+
+#ghProjectTree ul {
+    list-style: none;
+}
+
+.gh-commit-error {
+    color: red;
+    display: none;
+}
+
+.gh-visible {
+    display: block;
+}
+
+.gh-hidden {
+    display: none;
+}
+
+#gh-commit-modal i.folder-icon {
+    color: black;
+}
+
+#gh-commit-modal li.file {
+    padding-left: 1em;
+}
+
+.gh-disabled {
+    color: #ccc;
+}
+
+.gh-ml {
+    margin-left: 20px;
+}
+
+.gh-mt {
+    margin-top: 20px;
+}
+
+[data-gh-status]::before{
+    content: "*";
+    color: white;
+}
+
+[data-gh-status="*modified"]::before {
+    color: red;
+}
+
+[data-gh-status="*added"]::before {
+    color: red;
+}
+
+[data-gh-status="modified"]::before {
+    color: blue;
+}
+
+[data-gh-status="added"]::before {
+    color: blue;
+}
+
+.gh-red {
+    color: red;
+}
+
+.gh-blue {
+    color: blue;
+}
+
+
+
+/* From fork.html */
+#gh-fork-verification {
+    visibility: hidden;
+    margin-left: 20px;
+}

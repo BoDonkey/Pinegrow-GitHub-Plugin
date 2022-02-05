@@ -1,0 +1,57 @@
+<style>.gh-error { color: red; visibility: hidden; } .logged-in{ color: green; visibility: hidden;}</style>
+<div class="modal pg-show-modal fade" id="gh-settings-modal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="gh-user-name" class="form-control-label">User Name:</label>
+                        <input type="text" class="form-control" id="gh-user-name" required>
+                        <span class="gh-error" id="gh-username-error">This user name is not associated with this token.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="gh-user-email" class="form-control-label">Email:</label>
+                        <input type="email" class="form-control" id="gh-user-email" required>
+                        <span class="gh-error" id="gh-email-error">An email address is required,</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="gh-token" class="form-control-label">Personal Account Token:</label>
+                        <input class="form-control" type="password" id="gh-token" required>
+                        <span class="gh-error" id="gh-token-error">This token is not valid.</span>
+                    </div>
+                    <div class="form-check" id="gh-token-reveal">
+                        <input class="form-check-input" type="checkbox" id="gh-show-token" value="option1"> 
+                        <label class="form-check-label" for="gh-show-token">Show Token?</label>
+                    </div>
+                    <div>
+                        <span class="logged-in" id="gh-correct-credentials">These credentials are valid</span>
+                    </div>
+                    <div>
+                        <span class="gh-error" id="gh-git-config-missing">Either there is no .gitconfig file for this project, or it is incorrectly configured.</span>
+                    </div>
+                    <div>
+                        <span class="gh-error" id="gh-settings-project-error">Retrieving settings only works with a project open</span>
+                    </div>
+                    <div>
+                        <span class="gh-error" id="gh-settings-retrieved-notification">Credentials retrieved. Please click the "Save settings" button before closing the window.</span>
+                    </div>
+                    <div>
+                        <span class="gh-error" id="gh-settings-config-notification">Config file updated</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="gh-retrieve-settings" class="btn btn-info">Retrieve settings</button>
+                <button type="button" id="gh-clear-settings" class="btn btn-default">Clear settings</button>
+                <button type="button" id="gh-save-settings" class="btn btn-primary">Save Settings</button>
+                <button type="button" id="gh-cancel-settings" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
