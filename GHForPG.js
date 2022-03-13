@@ -31,18 +31,22 @@ $(function () {
         //uncomment the line below for debugging - opens devtools on Pinegrow Launch
         //require('nw.gui').Window.get().showDevTools();
 
-        //Load in the Octokit module and plugins
+        //Establish the base directory for node modules
         const frameBase = framework.getBaseUrl();
+
+        //Load in the Octokit module
         const {
             Octokit
         } = require(crsaMakeFileFromUrl(frameBase + '/node_modules/@octokit/rest/dist-node/index.js'));
 
-        //Load in Git functions
+        //Load in Git functions from the isomorphic-git library
         const Git = require(crsaMakeFileFromUrl(frameBase + '/node_modules/isomorphic-git/index.cjs'));
         const http = require(crsaMakeFileFromUrl(frameBase + '/node_modules/isomorphic-git/http/node/index.cjs'));
+
+        //Load in glob for easier file handling
         const glob = require(crsaMakeFileFromUrl(frameBase + '/node_modules/fast-glob/out/index.js'));
 
-        //add in better folder selector
+        //Add in better folder selector
         const openFolderExplorer = require(crsaMakeFileFromUrl(frameBase + '/node_modules/nw-programmatic-folder-select/index.js'));
 
         //load in file management packages
@@ -339,7 +343,7 @@ $(function () {
                     let owner = localStorage.getItem('gh-settings-user-name');
 
                     let projectDirectory = ghProjectDirectory();
-                    let initializeProject = await Git.init({
+                    await Git.init({
                         fs: fse,
                         dir: projectDirectory,
                         defaultBranch: 'main'
@@ -358,8 +362,8 @@ $(function () {
 [branch "main"]
         merge = refs/heads/main
         remote = origin`
-                    let newValues = await ghWriteConfig(newAccountConfigValues, projectDirectory);
-                    let baseValues = await ghWriteGitConfig(projectDirectory);
+                    await ghWriteConfig(newAccountConfigValues, projectDirectory);
+                    await ghWriteGitConfig(projectDirectory);
                     let uploadStatus = await ghUploadToRepoNew(projectDirectory, projectData, 'main', commitMessage);
                     ghStatusUpdate(uploadStatus, createMessage, 'Files uploaded');
                 }
@@ -1144,17 +1148,18 @@ $(function () {
                     }
                     let fileWrap = document.createElement('li');
                     let fileStatus = await ghGitStatus(projectDirectory, child.path);
-                    let disabled = !fileStatus.unstaged;
+                    let disabled = fileStatus.staged || fileStatus.ignored;
                     fileWrap.className = 'project-item file';
                     if (disabled) fileWrap.classList.add('gh-disabled');
                     fileWrap.setAttribute('data-gh-type', 'file');
                     fileWrap.setAttribute('data-gh-file-name', child.name);
                     fileWrap.setAttribute('data-gh-url', child.path);
                     fileWrap.setAttribute('data-gh-status', fileStatus.status);
-                    let fileSelect = document.createElement('input');
-                    fileSelect.setAttribute('type', 'checkbox');
-                    //if (disabled) fileSelect.setAttribute('disabled', 'disabled');
-                    fileWrap.append(fileSelect);
+                    if (!fileStatus.ignored) {
+                        let fileSelect = document.createElement('input');
+                        fileSelect.setAttribute('type', 'checkbox');
+                        fileWrap.append(fileSelect);
+                    }
                     fileWrap.append(document.createTextNode(child.name));
                     targetElement.append(fileWrap);
                 });
@@ -1554,20 +1559,21 @@ $(function () {
         }
 
         async function ghUploadToRepoNew(projectDirectory, projectData, branch = 'main', commitMessage = 'commit initial files') {
-            let unfilteredFilesPaths = await glob.sync(projectDirectory + '/**/*', {
+            let filesPaths = await glob.sync(projectDirectory + '/**/*', {
                 ignore: ['**/.git/**']
             });
-            //let filesPaths = ghFilterFiles(unfilteredFilesPaths);
-            let filesPaths = unfilteredFilesPaths;
             filesPaths.forEach(async (path) => {
                 let relativePath = Path.relative(projectDirectory, path);
-                await Git.add({
-                    fs: fse,
-                    dir: projectDirectory,
-                    filepath: relativePath
-                });
+                let ignored = await ghGitStatus(projectDirectory, path);
+                if (!ignored[ignored]) {
+                    await Git.add({
+                        fs: fse,
+                        dir: projectDirectory,
+                        filepath: relativePath
+                    });
+                }
             });
-            let sha = await Git.commit({
+            await Git.commit({
                 fs: fse,
                 dir: projectDirectory,
                 author: {
@@ -1580,7 +1586,7 @@ $(function () {
                 username: localStorage.getItem('gh-settings-user-name'),
                 password: localStorage.getItem('gh-settings-token')
             });
-            let pushRequest = await Git.push({
+            await Git.push({
                 fs: fse,
                 http,
                 dir: projectDirectory,
@@ -1615,11 +1621,13 @@ $(function () {
             let unstagedChanges = ['*modified', '*deleted', '*added', '*unmodified', '*absent', '*undeleted', '*undeletemodified'];
             let stagedChanges = ['modified', 'deleted', 'added'];
             let unstaged = unstagedChanges.includes(fileStatus);
-            let staged = stagedChanges.includes(fileStatus)
+            let staged = stagedChanges.includes(fileStatus);
+            let ignored = fileStatus === 'ignored' ? true : false;
             return {
                 status: fileStatus,
                 unstaged: unstaged,
-                staged: staged
+                staged: staged,
+                ignored: ignored
             };
         }
 
@@ -1643,20 +1651,6 @@ $(function () {
             let pathedFile = Path.join(projectDirectory, file);
             let testFile = await ghGitStatus(projectDirectory, pathedFile);
             return testFile.staged;
-        }
-
-        async function ghUnstagedFiles() {
-            let projectDirectory = ghProjectDirectory();
-            let status = await Git.listFiles({
-                fs: fse,
-                dir: projectDirectory
-            });
-            let returnedFiles = status.filter(async file => {
-                let pathedFile = Path.join(projectDirectory, file);
-                let testFile = await ghGitStatus(projectDirectory, pathedFile);
-                return (testFile.unstaged ? file : false);
-            })
-            return returnedFiles.toString();
         }
 
         async function ghTestStatus() {
